@@ -1,7 +1,7 @@
 createjs-snow-tutorial
 ======================
 
-See full tutorial at andreakereliuk.com/createjs-snow-tutorial/
+See full tutorial at <a href="andreakereliuk.com/createjs-snow-tutorial/">andreakereliuk.com/createjs-snow-tutorial/</a>
 
 This is my first repo, so any helpful comments would be appreciated!
 
