@@ -1,50 +1,40 @@
- window.addEventListener("load", init);
+window.addEventListener("load", init);
 
-    function init() {
+function init() {
 
-        var stage = new createjs.Stage("myCanvas");
+	var stage = new createjs.Stage("myCanvas");
 
+	setInterval(snowBegin, 200);
 
+	function snowBegin() {
 
-        setInterval(snowBegin, 200);
+		var snowflake = new createjs.Bitmap("snowflakeS.png");
 
-        function snowBegin() {
+		var container = new createjs.Container();
+		container.x = Math.random() * window.innerWidth;
 
-            var snowflake = new createjs.Bitmap("snowflakeS.png");
+		container.addChild(snowflake);
+		stage.addChild(container);
 
+		var duration = Math.random() * 1000 + 1000;
 
-            var container = new createjs.Container();
+		createjs.Tween.get(snowflake, {loop:true})
+			.to({x:0, alpha:1}, createjs.Ease.quadInOut)
+			.wait(15)
+			.to({x:25, alpha:1}, duration, createjs.Ease.quadInOut)
+			.wait(15)
+			.to({x:0, alpha:1}, duration, createjs.Ease.quadInOut);
 
-            container.addChild(snowflake);
+		createjs.Tween.get(container, {loop:true})
+			.to({y:window.innerHeight}, 10000, createjs.Ease.BackOut)
+			.call(removeContainer);
 
-            container.x = Math.random()*window.innerWidth;
+		function removeContainer(e) {
+			stage.removeChild(e.target);
+		}
 
+	}
 
+	createjs.Ticker.on("tick", stage);
 
-            var duration = Math.random()*1000+1000;
-
-            createjs.Tween.get(snowflake, {loop:true})
-            .to({x:0, alpha:1}, createjs.Ease.quadInOut)
-            .wait(15)
-            .to({x:25, alpha:1}, duration, createjs.Ease.quadInOut)
-            .wait(15)
-            .to({x:0, alpha:1}, duration, createjs.Ease.quadInOut);
-
-            stage.addChild(container);
-
-            createjs.Tween.get(container, {loop:true})
-            .to({y:window.innerHeight}, 10000, createjs.Ease.BackOut)
-            .call(removeContainer);
-
-
-            createjs.Ticker.on("tick", stage).setInterval(5);
-
-        }
-
-        function removeContainer(e) {
-        stage.removeChild(e.target);
-        }
-
-
-    }
-    
+}
